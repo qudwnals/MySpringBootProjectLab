@@ -1,6 +1,6 @@
 package com.rookies5.myspringbootlab.config;
 
-
+import com.rookies5.myspringbootlab.environment.MyEnvironment;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -9,10 +9,9 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 public class ProdConfig {
     @Bean
-    public CustomerVO customVO() {
-        return CustomerVO.builder()
-                .mode("운영 환경")
-                .rate(0.8)
+    public MyEnvironment myEnvironment() {
+        return MyEnvironment.builder()
+                .mode("운영환경")
                 .build();
     }
 }
