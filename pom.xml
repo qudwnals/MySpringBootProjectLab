@@ -5,11 +5,11 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.5.11</version>
+		<version>3.3.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.basic</groupId>
-	<artifactId>myspringboot</artifactId>
+	<groupId>com.rookies5</groupId>
+	<artifactId>myspringbootlab</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>MySpringBoot</name>
 	<description>Demo project for Spring Boot</description>
