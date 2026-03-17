@@ -18,7 +18,7 @@ public class BookController {
     private final BookService bookService;
 
     @PostMapping
-    public ResponseEntity<BookDTO.BookResponse> createBook(@RequestBody @Valid BookDTO.BookCreateRequest request) {
+    public ResponseEntity<BookDTO.BookResponse> createBook(@RequestBody @Valid BookDTO.Request request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(bookService.createBook(request));
     }
 
@@ -37,12 +37,38 @@ public class BookController {
         return ResponseEntity.ok(bookService.getBookByIsbn(isbn));
     }
 
+    @GetMapping("/search/author")
+    public ResponseEntity<List<BookDTO.BookResponse>> searchBooksByAuthor(@RequestParam String author) {
+        return ResponseEntity.ok(bookService.searchBooksByAuthor(author));
+    }
+
+    @GetMapping("/search/title")
+    public ResponseEntity<List<BookDTO.BookResponse>> searchBooksByTitle(@RequestParam String title) {
+        return ResponseEntity.ok(bookService.searchBooksByTitle(title));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<BookDTO.BookResponse> updateBook(
             @PathVariable Long id,
-            @RequestBody @Valid BookDTO.BookUpdateRequest request
+            @RequestBody @Valid BookDTO.Request request
     ) {
         return ResponseEntity.ok(bookService.updateBook(id, request));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<BookDTO.BookResponse> patchBook(
+            @PathVariable Long id,
+            @RequestBody @Valid BookDTO.PatchRequest request
+    ) {
+        return ResponseEntity.ok(bookService.patchBook(id, request));
+    }
+
+    @PatchMapping("/{id}/detail")
+    public ResponseEntity<BookDTO.BookResponse> patchBookDetail(
+            @PathVariable Long id,
+            @RequestBody @Valid BookDTO.BookDetailPatchRequest request
+    ) {
+        return ResponseEntity.ok(bookService.patchBookDetail(id, request));
     }
 
     @DeleteMapping("/{id}")

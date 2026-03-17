@@ -1,6 +1,7 @@
 package com.rookies5.myspringbootlab.book.repository;
 
 import com.rookies5.myspringbootlab.book.domain.Book;
+import com.rookies5.myspringbootlab.book.domain.BookDetail;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ class BookRepositoryTest {
 
         assertThat(saved.getId()).isNotNull();
         assertThat(saved.getTitle()).isEqualTo("스프링 부트 입문");
+        assertThat(saved.getBookDetail()).isNotNull();
     }
 
     @Test
@@ -42,7 +44,7 @@ class BookRepositoryTest {
         bookRepository.save(sampleBook1());
         bookRepository.save(sampleBook2());
 
-        List<Book> books = bookRepository.findByAuthor("홍길동");
+        List<Book> books = bookRepository.findByAuthorContainingIgnoreCase("홍길동");
 
         assertThat(books).hasSize(1);
         assertThat(books.get(0).getIsbn()).isEqualTo("9788956746425");
@@ -73,22 +75,44 @@ class BookRepositoryTest {
     }
 
     private Book sampleBook1() {
-        return Book.builder()
+        Book book = Book.builder()
                 .title("스프링 부트 입문")
                 .author("홍길동")
                 .isbn("9788956746425")
                 .price(30000)
                 .publishDate(LocalDate.of(2025, 5, 7))
                 .build();
+
+        book.assignDetail(BookDetail.builder()
+                .description("스프링 부트 기초를 다루는 책")
+                .language("Korean")
+                .pageCount(320)
+                .publisher("루키스")
+                .coverImageUrl("https://example.com/springboot.jpg")
+                .edition("1st")
+                .build());
+
+        return book;
     }
 
     private Book sampleBook2() {
-        return Book.builder()
+        Book book = Book.builder()
                 .title("JPA 프로그래밍")
-                .author("박둘리")
+                .author("박준영")
                 .isbn("9788956746432")
                 .price(35000)
                 .publishDate(LocalDate.of(2025, 4, 30))
                 .build();
+
+        book.assignDetail(BookDetail.builder()
+                .description("JPA 실전 활용서")
+                .language("Korean")
+                .pageCount(410)
+                .publisher("테크북스")
+                .coverImageUrl("https://example.com/jpa.jpg")
+                .edition("2nd")
+                .build());
+
+        return book;
     }
 }

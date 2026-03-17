@@ -15,7 +15,7 @@ public class DefaultExceptionAdvice {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorObject> handleBusinessException(BusinessException ex) {
-        return ResponseEntity.status(ex.getHttpStatus()).body(ex.getErrorObject());
+        return ResponseEntity.status(ex.getErrorCode().getHttpStatus()).body(ex.getErrorObject());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -1,19 +1,18 @@
 package com.rookies5.myspringbootlab.common.exception;
 
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
 
 @Getter
 public class BusinessException extends RuntimeException {
-    private final HttpStatus httpStatus;
+    private final ErrorCode errorCode;
     private final ErrorObject errorObject;
 
-    public BusinessException(HttpStatus httpStatus, String code, String message) {
-        super(message);
-        this.httpStatus = httpStatus;
+    public BusinessException(ErrorCode errorCode, Object... args) {
+        super(errorCode.formatMessage(args));
+        this.errorCode = errorCode;
         this.errorObject = ErrorObject.builder()
-                .code(code)
-                .message(message)
+                .code(errorCode.getCode())
+                .message(errorCode.formatMessage(args))
                 .build();
     }
 }
